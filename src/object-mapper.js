@@ -124,14 +124,14 @@ function _isObject(item) {
   return typeof item === "object" && !Array.isArray(item) && item !== null;
 }
 
-function reverseMapping(mapping: Object) {
+function reverseMapping(mapping) {
   const keys = Object.keys(mapping);
   const rslt = {};
   keys.forEach(key => genMappingReversion(rslt, key, mapping));
   return rslt;
 }
 
-function genMappingReversion(rslt: Object, key, mapping) {
+function genMappingReversion(rslt, key, mapping) {
   const obj = mapping[key];
   let reverseMapper;
   let toKey;
