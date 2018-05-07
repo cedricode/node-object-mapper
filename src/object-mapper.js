@@ -138,7 +138,7 @@ function genMappingReversion(rslt: Object, key, mapping) {
   if (obj instanceof Object) {
     reverseMapper = {
       key,
-      transform: obj.reverse,
+      transform: obj.reverse || val => val,
       reverse: obj.transform
     };
     toKey = obj.key;
@@ -148,7 +148,7 @@ function genMappingReversion(rslt: Object, key, mapping) {
     let firstObj = obj[0];
     reverseMapper = {
       key,
-      transform: firstObj.reverse,
+      transform: firstObj.reverse || val => val,
       reverse: firstObj.transform
     };
     toKey = firstObj.key;
