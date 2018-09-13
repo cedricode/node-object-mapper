@@ -146,6 +146,7 @@ function genMappingReversion(rslt, key, mapping) {
       reverse: obj.transform
     };
     toKey = obj.key;
+    toKey = toKey.replace(/[\?\+]$/, "");
   }
 
   if (Array.isArray(obj) && obj.length) {
@@ -160,11 +161,13 @@ function genMappingReversion(rslt, key, mapping) {
       reverse: firstObj.transform
     };
     toKey = firstObj.key;
+    toKey = toKey.replace(/[\?\+]$/, "");
   }
 
   if (typeof obj === "string") {
     reverseMapper = key;
     toKey = obj;
+    toKey = toKey.replace(/[\?\+]$/, "");
   }
 
   rslt[toKey] = reverseMapper;
