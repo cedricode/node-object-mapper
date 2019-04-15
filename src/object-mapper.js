@@ -1,6 +1,6 @@
-"use strict";
-var getKeyValue = require("./get-key-value"),
-  setKeyValue = require("./set-key-value"),
+'use strict';
+var getKeyValue = require('./get-key-value'),
+  setKeyValue = require('./set-key-value'),
   _undefined;
 
 /**
@@ -14,12 +14,12 @@ var getKeyValue = require("./get-key-value"),
 function ObjectMapper(fromObject, toObject, propertyMap) {
   var propertyKeys;
 
-  if (typeof propertyMap === "undefined") {
+  if (typeof propertyMap === 'undefined') {
     propertyMap = toObject;
     toObject = _undefined;
   }
 
-  if (typeof toObject === "undefined") {
+  if (typeof toObject === 'undefined') {
     toObject = {};
   }
 
@@ -94,20 +94,20 @@ function _mapKey(fromObject, fromKey, toObject, toKey) {
     toKey = toKey[0];
   }
 
-  if (typeof _default === "function") {
+  if (typeof _default === 'function') {
     _default = _default(fromObject, fromKey, toObject, toKey);
   }
 
   fromValue = getKeyValue(fromObject, fromKey);
-  if (typeof fromValue === "undefined" || fromValue === null) {
+  if (typeof fromValue === 'undefined' || fromValue === null) {
     fromValue = _default;
   }
 
-  if (typeof fromValue !== "undefined" && typeof transform === "function") {
+  if (typeof fromValue !== 'undefined' && typeof transform === 'function') {
     fromValue = transform(fromValue, fromObject, toObject, fromKey, toKey);
   }
 
-  if (typeof fromValue === "undefined" || typeof toKey === "undefined") {
+  if (typeof fromValue === 'undefined' || typeof toKey === 'undefined') {
     return toObject;
   }
 
@@ -121,13 +121,13 @@ function _mapKey(fromObject, fromKey, toObject, toKey) {
 }
 
 function _isObject(item) {
-  return typeof item === "object" && !Array.isArray(item) && item !== null;
+  return typeof item === 'object' && !Array.isArray(item) && item !== null;
 }
 
 function reverseMapping(mapping) {
   const keys = Object.keys(mapping);
   const rslt = {};
-  keys.forEach(key => genMappingReversion(rslt, key, mapping));
+  keys.forEach((key) => genMappingReversion(rslt, key, mapping));
   return rslt;
 }
 
@@ -135,8 +135,8 @@ function genMappingReversion(rslt, key, mapping) {
   const obj = mapping[key];
   let reverseMapper;
   let toKey;
-  if (obj instanceof Object) {
-    let _reverse = val => val;
+  if (!Array.isArray(obj) && obj instanceof Object) {
+    let _reverse = (val) => val;
     if (obj.reverse) {
       _reverse = obj.reverse;
     }
@@ -146,12 +146,12 @@ function genMappingReversion(rslt, key, mapping) {
       reverse: obj.transform
     };
     toKey = obj.key;
-    toKey = toKey.replace(/[\?\+]$/, "");
+    toKey = toKey.replace(/[\?\+]$/, '');
   }
 
   if (Array.isArray(obj) && obj.length) {
     let firstObj = obj[0];
-    let _reverse = val => val;
+    let _reverse = (val) => val;
     if (firstObj.reverse) {
       _reverse = firstObj.reverse;
     }
@@ -161,13 +161,13 @@ function genMappingReversion(rslt, key, mapping) {
       reverse: firstObj.transform
     };
     toKey = firstObj.key;
-    toKey = toKey.replace(/[\?\+]$/, "");
+    toKey = toKey.replace(/[\?\+]$/, '');
   }
 
-  if (typeof obj === "string") {
+  if (typeof obj === 'string') {
     reverseMapper = key;
     toKey = obj;
-    toKey = toKey.replace(/[\?\+]$/, "");
+    toKey = toKey.replace(/[\?\+]$/, '');
   }
 
   rslt[toKey] = reverseMapper;
